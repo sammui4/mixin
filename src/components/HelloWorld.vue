@@ -79,6 +79,12 @@
           awesome-vue
         </a>
       </li>
+      <li>
+        <router-link to="/int">int</router-link>
+      </li>
+      <li>
+        <router-link to="/one">one</router-link>
+      </li>
     </ul>
   </div>
 </template>
@@ -88,7 +94,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: '老衲'
     }
   }
 }
