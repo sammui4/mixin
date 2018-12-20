@@ -1,6 +1,6 @@
 import { flattern, sortByFixed, isEmptyValue } from '../../_utils'
 import HkmCheckbox from '../../checkbox'
-
+import Clusterize from 'clusterize.js'
 const MENU_MAP = {
   'copy': '复制',
   'remove_row': '移除该行',
@@ -10,7 +10,7 @@ const MENU_MAP = {
   'copy_row_down': '复制该行下方插入',
   'unfreeze_row': '解除冻结',
   'freeze_row': '冻结此行',
-  'append_row': '添加新行'    
+  'append_row': '添加新行'
 };
 
 export default {
@@ -24,13 +24,21 @@ export default {
       default: ''
     }
   },
-
+  componens:{
+    Clusterize
+  },
+  mounted () {
+    var clusterize = new Clusterize({
+      scrollElem: 'tbody',
+      contentElem: 'tr'
+    });
+  },
   render (h) {
     let store = this.store;
 
     let columns = flattern(
-      sortByFixed(store.columns), 
-      'children', 
+      sortByFixed(store.columns),
+      'children',
       column => column.isLeaf
     );
     // 没有数据
@@ -39,9 +47,9 @@ export default {
         return (
           <tbody class="hkm-table__body">
             <tr class="hkm-table__body-row">
-              <td 
-                colspan={columns.length} 
-                rowspan="1" 
+              <td
+                colspan={columns.length}
+                rowspan="1"
                 class="hkm-table__body-cell no-data"
                 onContextmenu={e => this.handleNoDataContextmenu(e)}>暂无数据</td>
             </tr>
@@ -56,15 +64,15 @@ export default {
     let isTop = this.tableType.slice(-3) === 'top';
 
     let records = store[isTop ? 'topRecords' : 'records'];
-    
+
     return (
       <tbody class="hkm-table__body">
         {
           records.map((record, i) => {
             return (
-              <tr 
+              <tr
                 class={this.getRowClass(record)}
-                key={this.getKey(record, i)} 
+                key={this.getKey(record, i)}
                 onClick={e=> this.handleRowClick(e, {record})}>
                 {
                   columns.map((column, k) => {
@@ -75,23 +83,23 @@ export default {
                     }
 
                     return (
-                      <td 
-                        key={ k } 
+                      <td
+                        key={ k }
                         rowspan={ rowspan }
                         colspan={ colspan }
-                        class={`hkm-table__body-cell align-${column.align} ${column.cellClassName}`} 
+                        class={`hkm-table__body-cell align-${column.align} ${column.cellClassName}`}
                         onClick={e => this.handleCellClick(e, { column, record, recordIndex: i, columnIndex: k })}
                         onDblclick={e => this.handleCellDblClick(e, { column, record, recordIndex: i, columnIndex: k }) }
                         onContextmenu={e => this.handleContextmenu(e, { column, recordIndex: i })}>
-                        <div class="cell">{ 
-                          column.renderCell(h, { 
+                        <div class="cell">{
+                          column.renderCell(h, {
                             record,
-                            column, 
+                            column,
                             index: i,
                             rowspan,
                             colspan,
                             context: column.type === 'selection' ? this : column.context
-                          })                           
+                          })
                         }</div>
                       </td>
                     );
@@ -111,7 +119,7 @@ export default {
 
       return selections.indexOf(record) > -1;
     },
-    
+
     toggleSelection (data) {
       this.$emit('toggle-selection', data);
     },
@@ -186,15 +194,15 @@ export default {
         }
 
         menuItems.push({text: v, value: m});
-      }) 
+      })
 
-      this.$emit('context-menu', { 
-        column, 
+      this.$emit('context-menu', {
+        column,
         menuItems,
         source: 'tbody',
-        recordIndex, 
-        x: e.clientX, 
-        y: e.clientY 
+        recordIndex,
+        x: e.clientX,
+        y: e.clientY
       })
     },
 
@@ -212,7 +220,7 @@ export default {
         recordIndex: -1,
         x: e.clientX,
         y: e.clientY
-      })      
+      })
     },
 
     getKey (record, i) {
@@ -234,7 +242,7 @@ export default {
       }
 
       if (
-        (store.highLightCurrent && store.currentRecord == record) 
+        (store.highLightCurrent && store.currentRecord == record)
       ) {
         cls += ' high-light__row--click';
       }
@@ -245,5 +253,5 @@ export default {
 
   components: {
     HkmCheckbox
-  }  
+  }
 }
