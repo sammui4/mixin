@@ -3,9 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+import '@/components/packages'
 Vue.config.productionTip = false
 import waves from '@/directive/waves/index.js'
+import 'babel-polyfill'
 // console.log( waves)
 Vue.use(waves);
 

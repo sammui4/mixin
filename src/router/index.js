@@ -14,12 +14,17 @@ export default new Router({
     {
       path: '/int',
       name: 'int',
-      component: ()=> import ('@/components/int')      
+      component: ()=> import ('@/components/int')
     },
     {
       path: '/one',
       name: 'one',
-      component: ()=> import ('@/components/one')      
+      component: ()=> import ('@/components/one')
+    },
+    {
+      path: '/wordPiece',
+      name: 'wordPiece',
+      component: ()=> import ('@/components/wordPiece')
     }
   ]
 })
