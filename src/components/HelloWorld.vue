@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-
+    <h2>{{num}}</h2>
     <ul>
       <li>
         <router-link to="/int">int</router-link>
