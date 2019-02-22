@@ -24,7 +24,7 @@ export default {
   data () {
     return {
       msg: '老衲',
-      marriage_list
+      marriage_list:[]
     }
   },
   method:{
